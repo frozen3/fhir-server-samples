@@ -20,13 +20,13 @@ param
     [string]$EnvironmentName,
 
     [Parameter(Mandatory = $false)]
-    [string]$EnvironmentLocation = "westus",
+    [string]$EnvironmentLocation = "usgovarizona",
 
     [Parameter(Mandatory = $false)]
-    [string]$FhirApiLocation = "westus2",
+    [string]$FhirApiLocation = "usgovarizona",
 
     [Parameter(Mandatory = $false)]
-    [string]$SourceRepository = "https://github.com/Microsoft/fhir-server-samples",
+    [string]$SourceRepository = "https://github.com/frozen3/fhir-server-samples",
 
     [Parameter(Mandatory = $false)]
     [string]$SourceRevision = "master",
@@ -163,14 +163,14 @@ $dashboardJSTemplate = "${githubRawBaseUrl}/${SourceRevision}/deploy/templates/a
 $importerTemplate = "${githubRawBaseUrl}/${SourceRevision}/deploy/templates/azuredeploy-importer.json"
 
 $tenantDomain = $tenantInfo.TenantDomain
-$aadAuthority = "https://login.microsoftonline.com/${tenantDomain}"
+$aadAuthority = "https://login.microsoftonline.us/${tenantDomain}"
 
-$dashboardJSUrl = "https://${EnvironmentName}dash.azurewebsites.net"
+$dashboardJSUrl = "https://${EnvironmentName}dash.azurewebsites.us"
 
 if ($UsePaaS) {
-    $fhirServerUrl = "https://${EnvironmentName}.azurehealthcareapis.com"
+    $fhirServerUrl = "https://${EnvironmentName}.azurehealthcareapis.us"
 } else {
-    $fhirServerUrl = "https://${EnvironmentName}srvr.azurewebsites.net"
+    $fhirServerUrl = "https://${EnvironmentName}srvr.azurewebsites.us"
 }
 
 $confidentialClientIdKV = (Get-AzKeyVaultSecret -VaultName "${EnvironmentName}-ts" -Name "${EnvironmentName}-confidential-client-id")
@@ -226,7 +226,7 @@ New-AzResourceGroupDeployment -TemplateUri $sandboxTemplate -environmentName $En
 
 Write-Host "Warming up site..."
 Invoke-WebRequest -Uri "${fhirServerUrl}/metadata" | Out-Null
-$functionAppUrl = "https://${EnvironmentName}imp.azurewebsites.net"
+$functionAppUrl = "https://${EnvironmentName}imp.azurewebsites.us"
 Invoke-WebRequest -Uri $functionAppUrl | Out-Null 
 
 @{
