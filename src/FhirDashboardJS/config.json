@@ -1,13 +1,13 @@
 {
-    "FhirServerUrl": "https://url-for-fhir.azurehealthcareapis.com",
+    "FhirServerUrl": "https://url-for-fhir.azurehealthcareapis.us",
     "SmartOnFhirApps": [
         {
             "DisplayName": "Growth Chart",
-            "LaunchUrl": "https://url-for-growth.azurewebsites.net/launch.html"
+            "LaunchUrl": "https://url-for-growth.azurewebsites.us/launch.html"
         },
         {
             "DisplayName": "Medications",
-            "LaunchUrl": "https://url-for-meds.azurewebsites.net/launch.html"
+            "LaunchUrl": "https://url-for-meds.azurewebsites.us/launch.html"
         }
     ]
 }

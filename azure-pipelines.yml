@@ -57,8 +57,8 @@ stages:
                            
                            Write-Host "##vso[task.setvariable variable=dashboardWebAppName]${environmentName}dash"
                            
-                           Write-Host "##vso[task.setvariable variable=DashboardUrl]https://${environmentName}dash.azurewebsites.net"
-                           Write-Host "##vso[task.setvariable variable=FhirServerUrl]https://${environmentName}.azurehealthcareapis.com"
+                           Write-Host "##vso[task.setvariable variable=DashboardUrl]https://${environmentName}dash.azurewebsites.us"
+                           Write-Host "##vso[task.setvariable variable=FhirServerUrl]https://${environmentName}.azurehealthcareapis.us"
                            
                            cd $(Build.SourcesDirectory)/deploy/scripts/
                            Write-Host "Remote Repo: ${remoteRepo}"
@@ -74,9 +74,9 @@ stages:
                            $storageAccountConnectionString = "DefaultEndpointsProtocol=https;AccountName=${storageAccountName};AccountKey=${storageAccountKey}"
                            Write-Host "##vso[task.setvariable variable=StorageAccountConnectionString]$storageAccountConnectionString"
                            
-                           $fhirServerMetadataUrl = "https://${environmentName}.azurehealthcareapis.com/metadata"
+                           $fhirServerMetadataUrl = "https://${environmentName}.azurehealthcareapis.us/metadata"
                            Invoke-WebRequest $fhirServerMetadataUrl
-                           $functionAppUrl = "https://${environmentName}imp.azurewebsites.net"
+                           $functionAppUrl = "https://${environmentName}imp.azurewebsites.us"
                            Invoke-WebRequest $functionAppUrl
                 - powershell: |
                       $env:FhirServerUrl = "$(FhirServerUrl)"
