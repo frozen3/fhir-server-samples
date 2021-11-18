@@ -24,9 +24,9 @@ catch {
 }
 
 $dashboardUrl = "https://${EnvironmentName}dash.azurewebsites.net"
-$growthChartAppLaunchUrl = "https://${EnvironmentName}growth.azurewebsites.net/launch.html"
-$medicationsAppLaunchUrl = "https://${EnvironmentName}meds.azurewebsites.net/launch.html"
-$fhirServerUrl = "https://${EnvironmentName}srvr.azurewebsites.net"
+$growthChartAppLaunchUrl = "https://${EnvironmentName}growth.azurewebsites.us/launch.html"
+$medicationsAppLaunchUrl = "https://${EnvironmentName}meds.azurewebsites.us/launch.html"
+$fhirServerUrl = "https://${EnvironmentName}srvr.azurewebsites.us"
 $dashboardUserUpn  = (Get-AzKeyVaultSecret -VaultName "${EnvironmentName}-ts" -Name "${EnvironmentName}-admin-upn").SecretValueText
 $dashboardUserPassword  = (Get-AzKeyVaultSecret -VaultName "${EnvironmentName}-ts" -Name "${EnvironmentName}-admin-password").SecretValueText
 $confidentialClientId  = (Get-AzKeyVaultSecret -VaultName "${EnvironmentName}-ts" -Name "${EnvironmentName}-confidential-client-id").SecretValueText
