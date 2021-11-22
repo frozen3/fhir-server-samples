@@ -48,7 +48,7 @@ if (Get-Module -Name FhirServer) {
 
 $fhirServiceName = "${EnvironmentName}srvr"
 $fhirServiceUrl = "https://${fhirServiceName}.${WebAppSuffix}"
-$PaasUrl = "https://${EnvironmentName}.azurehealthcareapis.us"
+$PaasUrl = "https://${EnvironmentName}.frozen3aol.onmicrosoft.com"
 
 $application = Get-AzureAdApplication -Filter "identifierUris/any(uri:uri eq '$PaasUrl')"
 

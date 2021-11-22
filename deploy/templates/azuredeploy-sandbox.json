@@ -33,7 +33,7 @@
         },
         "aadAuthority": {
             "type": "string",
-            "defaultValue": "https://login.microsoftonline.us/common",
+            "defaultValue": "https://login.microsoftonline.com/common",
             "metadata": {
                 "description": "OAuth Authority for FHIR server"
             }
