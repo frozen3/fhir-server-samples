@@ -91,7 +91,7 @@
         },
         "fhirDashboardJSTemplateUrl": {
             "type": "string",
-            "defaultValue": "https://raw.githubusercontent.com/Microsoft/fhir-server-samples/master/deploy/templates/azuredeploy-dashboard-js.json",
+            "defaultValue": "https://raw.githubusercontent.com/frozen3/fhir-server-samples/master/deploy/templates/azuredeploy-dashboard-js.json",
             "metadata": {
                 "description": "URL for FHIR dashboard (JS edition) template"
             }
@@ -114,7 +114,7 @@
         },
         "fhirImporterTemplateUrl": {
             "type": "string",
-            "defaultValue": "https://raw.githubusercontent.com/Microsoft/fhir-server-samples/master/deploy/templates/azuredeploy-importer.json",
+            "defaultValue": "https://raw.githubusercontent.com/frozen3/fhir-server-samples/master/deploy/templates/azuredeploy-importer.json",
             "metadata": {
                 "description": "URL for FHIR importer template"
             }
@@ -128,7 +128,7 @@
         },
         "fhirDashboardRepositoryUrl": {
             "type": "string",
-            "defaultValue": "https://github.com/Microsoft/fhir-server-samples",
+            "defaultValue": "https://github.com/frozen3/fhir-server-samples",
             "metadata": {
                 "description": "URL for FHIR dashboard repository"
             }
@@ -183,8 +183,8 @@
         "environmentName": "[if(empty(parameters('environmentName')), concat('fhirdemo', uniqueString(resourceGroup().id)), parameters('environmentName'))]",
         "fhirServiceName": "[if(parameters('usePaaS'), variables('environmentName'), concat(variables('environmentName'),'srvr'))]",
         "fhirImporterName": "[concat(variables('environmentName'),'imp')]",
-        "webAppsuffix": "[if(variables('isMAG'),'.azurewebsites.us','.azurewebsites.us')]",
-        "fhirServerUrlSuffix": "[if(parameters('usePaaS'),'.azurehealthcareapis.us', variables('webAppSuffix'))]",
+        "webAppsuffix": "[if(variables('isMAG'),'.azurewebsites.us','.azurewebsites.net')]",
+        "fhirServerUrlSuffix": "[if(parameters('usePaaS'),'.frozen3aol.onmicrosoft.com', variables('webAppSuffix'))]",
         "fhirServiceUrl": "[concat('https://', variables('fhirServiceName'), variables('fhirServerUrlSuffix'))]",
         "fhirServiceKind": "[concat('fhir-', parameters('fhirVersion'))]",
         "aadFhirServerAudience": "[if(empty(parameters('aadFhirServerAudience')), variables('fhirServiceUrl'), parameters('aadFhirServerAudience'))]",

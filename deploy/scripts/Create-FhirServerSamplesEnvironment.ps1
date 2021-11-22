@@ -168,7 +168,7 @@ $aadAuthority = "https://login.microsoftonline.us/${tenantDomain}"
 $dashboardJSUrl = "https://${EnvironmentName}dash.azurewebsites.us"
 
 if ($UsePaaS) {
-    $fhirServerUrl = "https://${EnvironmentName}.azurehealthcareapis.us"
+    $fhirServerUrl = "https://${EnvironmentName}.frozen3aol.onmicrosoft.com"
 } else {
     $fhirServerUrl = "https://${EnvironmentName}srvr.azurewebsites.us"
 }
