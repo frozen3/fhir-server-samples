@@ -130,7 +130,7 @@ Write-Host "Ensuring API application exists"
 
 $fhirServiceName = "${EnvironmentName}srvr"
 if ($UsePaas) {
-    $fhirServiceUrl = "https://${EnvironmentName}.frozen3aol.onmicrosoft.com"
+    $fhirServiceUrl = "https://${EnvironmentName}.azurehealthcareapis.com"
 } else {
     $fhirServiceUrl = "https://${fhirServiceName}.${WebAppSuffix}"    
 }

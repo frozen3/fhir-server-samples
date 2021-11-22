@@ -184,7 +184,7 @@
         "fhirServiceName": "[if(parameters('usePaaS'), variables('environmentName'), concat(variables('environmentName'),'srvr'))]",
         "fhirImporterName": "[concat(variables('environmentName'),'imp')]",
         "webAppsuffix": "[if(variables('isMAG'),'.azurewebsites.us','.azurewebsites.net')]",
-        "fhirServerUrlSuffix": "[if(parameters('usePaaS'),'.frozen3aol.onmicrosoft.com', variables('webAppSuffix'))]",
+        "fhirServerUrlSuffix": "[if(parameters('usePaaS'),'.azurehealthcareapis.com', variables('webAppSuffix'))]",
         "fhirServiceUrl": "[concat('https://', variables('fhirServiceName'), variables('fhirServerUrlSuffix'))]",
         "fhirServiceKind": "[concat('fhir-', parameters('fhirVersion'))]",
         "aadFhirServerAudience": "[if(empty(parameters('aadFhirServerAudience')), variables('fhirServiceUrl'), parameters('aadFhirServerAudience'))]",
