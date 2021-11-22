@@ -33,7 +33,7 @@
         },
         "aadAuthority": {
             "type": "string",
-            "defaultValue": "https://login.microsoftonline.us/common",
+            "defaultValue": "https://login.microsoftonline.com/common",
             "metadata": {
                 "description": "OAuth Authority for FHIR server"
             }
@@ -91,7 +91,7 @@
         },
         "fhirDashboardJSTemplateUrl": {
             "type": "string",
-            "defaultValue": "https://raw.githubusercontent.com/Microsoft/fhir-server-samples/master/deploy/templates/azuredeploy-dashboard-js.json",
+            "defaultValue": "https://raw.githubusercontent.com/frozen3/fhir-server-samples/master/deploy/templates/azuredeploy-dashboard-js.json",
             "metadata": {
                 "description": "URL for FHIR dashboard (JS edition) template"
             }
@@ -114,7 +114,7 @@
         },
         "fhirImporterTemplateUrl": {
             "type": "string",
-            "defaultValue": "https://raw.githubusercontent.com/Microsoft/fhir-server-samples/master/deploy/templates/azuredeploy-importer.json",
+            "defaultValue": "https://raw.githubusercontent.com/frozen3/fhir-server-samples/master/deploy/templates/azuredeploy-importer.json",
             "metadata": {
                 "description": "URL for FHIR importer template"
             }
@@ -128,7 +128,7 @@
         },
         "fhirDashboardRepositoryUrl": {
             "type": "string",
-            "defaultValue": "https://github.com/Microsoft/fhir-server-samples",
+            "defaultValue": "https://github.com/frozen3/fhir-server-samples",
             "metadata": {
                 "description": "URL for FHIR dashboard repository"
             }
