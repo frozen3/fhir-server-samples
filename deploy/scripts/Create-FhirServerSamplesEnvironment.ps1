@@ -26,7 +26,7 @@ param
     [string]$FhirApiLocation = "westus2",
 
     [Parameter(Mandatory = $false)]
-    [string]$SourceRepository = "https://github.com/Microsoft/fhir-server-samples",
+    [string]$SourceRepository = "https://github.com/frozen3/fhir-server-samples",
 
     [Parameter(Mandatory = $false)]
     [string]$SourceRevision = "master",
@@ -168,7 +168,7 @@ $aadAuthority = "https://login.microsoftonline.com/${tenantDomain}"
 $dashboardJSUrl = "https://${EnvironmentName}dash.azurewebsites.net"
 
 if ($UsePaaS) {
-    $fhirServerUrl = "https://${EnvironmentName}.azurehealthcareapis.com"
+    $fhirServerUrl = "https://${EnvironmentName}.frozen3aol.onmicrosoft.com"
 } else {
     $fhirServerUrl = "https://${EnvironmentName}srvr.azurewebsites.net"
 }
