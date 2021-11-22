@@ -20,10 +20,10 @@ param
     [string]$EnvironmentName,
 
     [Parameter(Mandatory = $false)]
-    [string]$EnvironmentLocation = "westus",
+    [string]$EnvironmentLocation = "westus2",
 
     [Parameter(Mandatory = $false)]
-    [string]$FhirApiLocation = "westus",
+    [string]$FhirApiLocation = "westus2",
 
     [Parameter(Mandatory = $false)]
     [string]$SourceRepository = "https://github.com/frozen3/fhir-server-samples",
