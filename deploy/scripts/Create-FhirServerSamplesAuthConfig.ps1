@@ -24,7 +24,7 @@ param
     [string]$EnvironmentLocation = "West US",
 
     [Parameter(Mandatory = $false )]
-    [String]$WebAppSuffix = "azurewebsites.net",
+    [String]$WebAppSuffix = "azurewebsites.us",
 
     [Parameter(Mandatory = $false)]
     [string]$ResourceGroupName = $EnvironmentName,
@@ -130,6 +130,7 @@ Write-Host "Ensuring API application exists"
 
 $fhirServiceName = "${EnvironmentName}srvr"
 if ($UsePaas) {
+
     $fhirServiceUrl = "https://${EnvironmentName}.frozen3aol.onmicrosoft.com"
 } else {
     $fhirServiceUrl = "https://${fhirServiceName}.${WebAppSuffix}"    

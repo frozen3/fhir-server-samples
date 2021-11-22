@@ -33,7 +33,7 @@
         },
         "aadAuthority": {
             "type": "string",
-            "defaultValue": "https://login.microsoftonline.com/common",
+            "defaultValue": "https://login.microsoftonline.us/common",
             "metadata": {
                 "description": "OAuth Authority for FHIR server"
             }
@@ -98,8 +98,8 @@
         },
         "fhirApiLocation": {
             "type": "string",
-            "allowedValues": [ "eastus", "westus2", "northcentralus", "ukwest", "uksouth", "southeastasia", "australiaeast", "westeurope" ],
-            "defaultValue": "westus2",
+            "allowedValues": [ "eastus", "westus2", "northcentralus", "ukwest", "uksouth", "southeastasia", "australiaeast", "westeurope","usgovarizona" ],
+            "defaultValue": "usgovarizona",
             "metadata": {
                 "description": "Location of Azure API for FHIR"
             }
