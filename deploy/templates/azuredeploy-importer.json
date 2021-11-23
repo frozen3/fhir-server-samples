@@ -61,7 +61,7 @@
         },
         "repositoryUrl": {
             "type": "string",
-            "defaultValue": "https://github.com/Microsoft/fhir-server-samples",
+            "defaultValue": "https://github.com/frozen3/fhir-server-samples",
             "metadata": {
                 "description": "Respository to pull source code from. If blank, source code will not be deployed."
             }
@@ -264,7 +264,7 @@
         "apiVersion": "2018-05-01-preview",
         "name": "[variables('applicationInsightsName')]",
         "type": "microsoft.insights/components",
-        "location": "East US",
+        "location": "West US 2",
         "tags": {
             "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/sites/', variables('applicationInsightsName'))]": "Resource"
         },
