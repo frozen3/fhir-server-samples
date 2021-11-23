@@ -52,11 +52,11 @@ param
     [bool]$EnableExport = $false,
 
     [parameter(Mandatory = $false)]
-    [SecureString]$AdminPassword
+    [SecureString]$AdminPassword,
 
     [Parameter(Mandatory = $true)]
     [ValidateNotNullOrEmpty()]
-    [string]$TenantId,
+    [string]$TenantId
 
 )
 
