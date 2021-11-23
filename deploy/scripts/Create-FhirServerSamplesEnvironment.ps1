@@ -54,6 +54,10 @@ param
     [parameter(Mandatory = $false)]
     [SecureString]$AdminPassword
 
+    [Parameter(Mandatory = $true)]
+    [ValidateNotNullOrEmpty()]
+    [string]$TenantId,
+
 )
 
 function SecretValueText
@@ -148,7 +152,7 @@ else {
 
 
 # Set up Auth Configuration and Resource Group
-./Create-FhirServerSamplesAuthConfig.ps1 -EnvironmentName $EnvironmentName -EnvironmentLocation $EnvironmentLocation -AdminPassword $AdminPassword -UsePaaS $UsePaaS
+./Create-FhirServerSamplesAuthConfig.ps1 -EnvironmentName $EnvironmentName -EnvironmentLocation $EnvironmentLocation -AdminPassword $AdminPassword -UsePaaS $UsePaaS -TenantId $TenantId
 
 #Template URLs
 $fhirServerTemplateUrl = "https://raw.githubusercontent.com/microsoft/fhir-server/master/samples/templates/default-azuredeploy.json"
