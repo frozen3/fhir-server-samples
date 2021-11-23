@@ -36,10 +36,10 @@ param
     [bool]$UsePaaS = $true,
 
     [parameter(Mandatory = $false)]
-    [SecureString]$AdminPassword
+    [SecureString]$AdminPassword,
 
     [parameter(Mandatory = $true)]
-    [string]$TenantId,
+    [string]$TenantId
 
 )
 
