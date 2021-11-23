@@ -37,6 +37,10 @@ param
 
     [parameter(Mandatory = $false)]
     [SecureString]$AdminPassword
+
+    [parameter(Mandatory = $true)]
+    [string]$TenantId,
+
 )
 
 Set-StrictMode -Version Latest
@@ -130,7 +134,7 @@ Write-Host "Ensuring API application exists"
 
 $fhirServiceName = "${EnvironmentName}srvr"
 if ($UsePaas) {
-    $fhirServiceUrl = "https://${EnvironmentName}.frozen3aol.onmicrosoft.com"
+    $fhirServiceUrl = "api://${EnvironmentName}.${TenantId}"
 } else {
     $fhirServiceUrl = "https://${fhirServiceName}.${WebAppSuffix}"    
 }
@@ -138,7 +142,7 @@ if ($UsePaas) {
 $application = Get-AzureAdApplication -Filter "identifierUris/any(uri:uri eq '$fhirServiceUrl')"
 
 if (!$application) {
-    $newApplication = New-FhirServerApiApplicationRegistration -FhirServiceAudience $fhirServiceUrl -AppRoles "globalAdmin"
+    $newApplication = New-FhirServerApiApplicationRegistration -FhirServiceAudience "api://${EnvironmentName}.${TenantId}" -AppRoles "globalAdmin"
     
     # Change to use applicationId returned
     $application = Get-AzureAdApplication -Filter "identifierUris/any(uri:uri eq '$fhirServiceUrl')"
