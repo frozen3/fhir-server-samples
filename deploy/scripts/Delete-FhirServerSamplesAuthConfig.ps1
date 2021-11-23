@@ -13,13 +13,18 @@ param
     [string]$EnvironmentLocation = "westus",
 
     [Parameter(Mandatory = $false )]
-    [String]$WebAppSuffix = "azurewebsites.us",
+    [String]$WebAppSuffix = "azurewebsites.net",
 
     [Parameter(Mandatory = $false)]
     [string]$ResourceGroupName = $EnvironmentName,
 
     [parameter(Mandatory = $false)]
-    [string]$KeyVaultName = "$EnvironmentName-ts"
+    [string]$KeyVaultName = "$EnvironmentName-ts",
+
+    [Parameter(Mandatory = $true)]
+    [ValidateNotNullOrEmpty()]
+    [string]$TenantId
+
 )
 
 Set-StrictMode -Version Latest
@@ -47,8 +52,8 @@ if (Get-Module -Name FhirServer) {
 }
 
 $fhirServiceName = "${EnvironmentName}srvr"
-$fhirServiceUrl = "https://${fhirServiceName}.${WebAppSuffix}"
-$PaasUrl = "https://${EnvironmentName}.frozen3aol.onmicrosoft.com"
+$fhirServiceUrl = "api://${EnvironmentName}.${TenantId}"
+$PaasUrl = "api://${EnvironmentName}.${TenantId}"
 
 $application = Get-AzureAdApplication -Filter "identifierUris/any(uri:uri eq '$PaasUrl')"
 

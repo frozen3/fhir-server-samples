@@ -169,12 +169,12 @@ $importerTemplate = "${githubRawBaseUrl}/${SourceRevision}/deploy/templates/azur
 $tenantDomain = $tenantInfo.TenantDomain
 $aadAuthority = "https://login.microsoftonline.com/${tenantDomain}"
 
-$dashboardJSUrl = "https://${EnvironmentName}dash.azurewebsites.com"
+$dashboardJSUrl = "https://${EnvironmentName}dash.azurewebsites.net"
 
 if ($UsePaaS) {
     $fhirServerUrl = "api://${EnvironmentName}.${TenantId}"
 } else {
-    $fhirServerUrl = "https://${EnvironmentName}srvr.azurewebsites.com"
+    $fhirServerUrl = "https://${EnvironmentName}srvr.azurewebsites.net"
 }
 
 $confidentialClientIdKV = (Get-AzKeyVaultSecret -VaultName "${EnvironmentName}-ts" -Name "${EnvironmentName}-confidential-client-id")
@@ -230,7 +230,7 @@ New-AzResourceGroupDeployment -TemplateUri $sandboxTemplate -environmentName $En
 
 Write-Host "Warming up site..."
 Invoke-WebRequest -Uri "${fhirServerUrl}/metadata" | Out-Null
-$functionAppUrl = "https://${EnvironmentName}imp.azurewebsites.com"
+$functionAppUrl = "https://${EnvironmentName}imp.azurewebsites.net"
 Invoke-WebRequest -Uri $functionAppUrl | Out-Null 
 
 @{
