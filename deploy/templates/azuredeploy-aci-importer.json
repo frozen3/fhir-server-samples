@@ -29,7 +29,7 @@
         },
         "aadAuthority": {
             "type": "string",
-            "defaultValue": "https://login.microsoftonline.us/common",
+            "defaultValue": "https://login.microsoftonline.com/common",
             "metadata": {
                 "description": "OAuth Authority"
             }
@@ -143,7 +143,7 @@
             "apiVersion": "2018-05-01-preview",
             "name": "[variables('applicationInsightsName')]",
             "type": "Microsoft.insights/components",
-            "location": "USGov Arizona",
+            "location": "West US 2",
             "tags": {
                 "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/sites/', variables('applicationInsightsName'))]": "Resource",
                 "FhirServerSolution": "[parameters('solutionType')]"
