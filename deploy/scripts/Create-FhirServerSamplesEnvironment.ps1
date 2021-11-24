@@ -20,10 +20,10 @@ param
     [string]$EnvironmentName,
 
     [Parameter(Mandatory = $false)]
-    [string]$EnvironmentLocation = "westus2",
+    [string]$EnvironmentLocation = "usgovarizona",
 
     [Parameter(Mandatory = $false)]
-    [string]$FhirApiLocation = "westus2",
+    [string]$FhirApiLocation = "usgovarizona",
 
     [Parameter(Mandatory = $false)]
     [string]$SourceRepository = "https://github.com/frozen3/fhir-server-samples",
@@ -167,14 +167,14 @@ $dashboardJSTemplate = "${githubRawBaseUrl}/${SourceRevision}/deploy/templates/a
 $importerTemplate = "${githubRawBaseUrl}/${SourceRevision}/deploy/templates/azuredeploy-importer.json"
 
 $tenantDomain = $tenantInfo.TenantDomain
-$aadAuthority = "https://login.microsoftonline.com/${tenantDomain}"
+$aadAuthority = "https://login.microsoftonline.us/${tenantDomain}"
 
-$dashboardJSUrl = "https://${EnvironmentName}dash.azurewebsites.net"
+$dashboardJSUrl = "https://${EnvironmentName}dash.azurewebsites.us"
 
 if ($UsePaaS) {
     $fhirServerUrl = "api://${EnvironmentName}.${TenantId}"
 } else {
-    $fhirServerUrl = "https://${EnvironmentName}srvr.azurewebsites.net"
+    $fhirServerUrl = "https://${EnvironmentName}srvr.azurewebsites.us"
 }
 
 $confidentialClientIdKV = (Get-AzKeyVaultSecret -VaultName "${EnvironmentName}-ts" -Name "${EnvironmentName}-confidential-client-id")
@@ -230,7 +230,7 @@ New-AzResourceGroupDeployment -TemplateUri $sandboxTemplate -environmentName $En
 
 Write-Host "Warming up site..."
 Invoke-WebRequest -Uri "${fhirServerUrl}/metadata" | Out-Null
-$functionAppUrl = "https://${EnvironmentName}imp.azurewebsites.net"
+$functionAppUrl = "https://${EnvironmentName}imp.azurewebsites.us"
 Invoke-WebRequest -Uri $functionAppUrl | Out-Null 
 
 @{
