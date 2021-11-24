@@ -33,7 +33,7 @@
         },
         "aadAuthority": {
             "type": "string",
-            "defaultValue": "https://login.microsoftonline.us/common",
+            "defaultValue": "https://login.microsoftonline.com/common",
             "metadata": {
                 "description": "OAuth Authority for FHIR server"
             }
@@ -99,7 +99,7 @@
         "fhirApiLocation": {
             "type": "string",
             "allowedValues": [ "eastus", "westus2", "northcentralus", "ukwest", "uksouth", "southeastasia", "australiaeast", "westeurope","usgovarizona" ],
-            "defaultValue": "usgovarizona",
+            "defaultValue": "westus2",
             "metadata": {
                 "description": "Location of Azure API for FHIR"
             }
@@ -183,7 +183,7 @@
         "environmentName": "[if(empty(parameters('environmentName')), concat('fhirdemo', uniqueString(resourceGroup().id)), parameters('environmentName'))]",
         "fhirServiceName": "[if(parameters('usePaaS'), variables('environmentName'), concat(variables('environmentName'),'srvr'))]",
         "fhirImporterName": "[concat(variables('environmentName'),'imp')]",
-        "webAppsuffix": "[if(variables('isMAG'),'.azurewebsites.us','.azurewebsites.us')]",
+        "webAppsuffix": "[if(variables('isMAG'),'.azurewebsites.us','.azurewebsites.net')]",
         "fhirServerUrlSuffix": "[if(parameters('usePaaS'),'.azurehealthcareapis.com', variables('webAppSuffix'))]",
         "fhirServiceUrl": "[concat('https://', variables('fhirServiceName'), variables('fhirServerUrlSuffix'))]",
         "fhirServiceKind": "[concat('fhir-', parameters('fhirVersion'))]",
