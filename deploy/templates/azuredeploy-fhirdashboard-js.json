@@ -42,7 +42,7 @@
         },
         "aadAuthority": {
             "type": "string",
-            "defaultValue": "https://login.microsoftonline.com/common",
+            "defaultValue": "https://login.microsoftonline.us/common",
             "metadata": {
                 "description": "OAuth Authority"
             }
