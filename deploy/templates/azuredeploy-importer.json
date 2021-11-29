@@ -91,6 +91,7 @@
     "variables": {
         "functionAppName": "[parameters('appName')]",
         "hostingPlanName": "[parameters('appName')]",
+        "applicationInsightsName": "[parameters('appName')]",
         "storageAccountName": "[replace(concat(toLower(parameters('appName')), 'sa'),'-','')]",
         "storageAccountid": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
         "aadAudience": "[if(empty(parameters('aadAudience')),parameters('fhirServerUrl'),parameters('aadAudience'))]"
@@ -166,7 +167,7 @@
                     "appSettings": [
                         {
                             "name": "AzureWebJobsDashboard",
-                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1]"
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]"
                         },
                         {
                             "name": "AzureWebJobsStorage",
@@ -174,7 +175,7 @@
                         },
                         {
                             "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
-                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1]"
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]"
                         },
                         {
                             "name": "WEBSITE_CONTENTSHARE",
@@ -191,6 +192,22 @@
                         {
                             "name": "FUNCTIONS_WORKER_RUNTIME",
                             "value": "dotnet"
+                        },
+                        {
+                            "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                            "value": "[reference(resourceId('microsoft.insights/components/', variables('applicationInsightsName')), '2015-05-01').InstrumentationKey]"
+                        },
+                        {
+                            "name": "APPINSIGHTS_PORTALINFO",
+                            "value": "ASP.NETCORE"
+                        },
+                        {
+                            "name": "APPINSIGHTS_PROFILERFEATURE_VERSION",
+                            "value": "1.0.0"
+                        },
+                        {
+                            "name": "APPINSIGHTS_SNAPSHOTFEATURE_VERSION",
+                            "value": "1.0.0"
                         },
                         {
                             "name": "PROJECT",
@@ -242,6 +259,18 @@
                     }
                 }
             ]
+        },
+        {   
+        "apiVersion": "2018-05-01-preview",
+        "name": "[variables('applicationInsightsName')]",
+        "type": "microsoft.insights/components",
+        "location": "USGov Arizona",
+        "tags": {
+            "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/sites/', variables('applicationInsightsName'))]": "Resource"
+        },
+        "properties": {
+            "ApplicationId": "[variables('applicationInsightsName')]",
+            "Request_Source": "IbizaWebAppExtensionCreate"
         }
     }
     ]

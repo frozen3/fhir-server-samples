@@ -96,6 +96,7 @@
         }
     },
     "variables": {
+        "applicationInsightsName": "[parameters('appName')]",
         "storageAccountName": "[replace(concat(toLower(parameters('appName')), 'sa'),'-','')]",
         "storageAccountid": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
         "aadAudience": "[if(empty(parameters('aadAudience')),parameters('fhirServerUrl'),parameters('aadAudience'))]"
@@ -139,6 +140,20 @@
             ]
         },
         {
+            "apiVersion": "2018-05-01-preview",
+            "name": "[variables('applicationInsightsName')]",
+            "type": "Microsoft.insights/components",
+            "location": "USGov Arizona",
+            "tags": {
+                "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/sites/', variables('applicationInsightsName'))]": "Resource",
+                "FhirServerSolution": "[parameters('solutionType')]"
+            },
+            "properties": {
+                "ApplicationId": "[variables('applicationInsightsName')]",
+                "Request_Source": "IbizaWebAppExtensionCreate"
+            }
+        },
+        {
             "name": "[parameters('appName')]",
             "type": "Microsoft.ContainerInstance/containerGroups",
             "apiVersion": "2018-02-01-preview",
@@ -147,6 +162,7 @@
             },
             "location": "[resourceGroup().location]",
             "dependsOn": [
+                "[resourceId('Microsoft.insights/components', variables('applicationInsightsName'))]",
                 "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
             ],
             "properties": {
@@ -156,6 +172,10 @@
                         "properties": {
                             "image": "[parameters('containerImage')]",
                             "environmentVariables": [
+                                {
+                                    "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                                    "value": "[reference(resourceId('microsoft.insights/components/', variables('applicationInsightsName')), '2015-05-01').InstrumentationKey]"
+                                },
                                 {
                                     "name": "Audience",
                                     "value": "[parameters('aadAudience')]"
