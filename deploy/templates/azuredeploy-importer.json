@@ -166,7 +166,7 @@
                     "appSettings": [
                         {
                             "name": "AzureWebJobsDashboard",
-                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]"
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1]"
                         },
                         {
                             "name": "AzureWebJobsStorage",
@@ -174,7 +174,7 @@
                         },
                         {
                             "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
-                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key)]"
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1]"
                         },
                         {
                             "name": "WEBSITE_CONTENTSHARE",
@@ -240,7 +240,9 @@
                         "branch": "[parameters('repositoryBranch')]",
                         "IsManualIntegration": true
                     }
-                 }
-             ]
-    }]
+                }
+            ]
+        }
+    }
+    ]
 }
