@@ -186,8 +186,7 @@ namespace Microsoft.Health
         private static CloudBlockBlob GetBlobReference(string containerName, string blobName, ILogger log)
         {
             var connectionString = System.Environment.GetEnvironmentVariable("AzureWebJobsStorage");
-          //  CloudStorageAccount storageAccount;
-            var storageAccount = new CloudStorageAccount(credentials, "core.usgovcloudapi.net", useHttps: true);
+            CloudStorageAccount storageAccount;
             if (CloudStorageAccount.TryParse(connectionString, out storageAccount))
             {
                 try
