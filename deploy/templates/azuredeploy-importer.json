@@ -103,9 +103,9 @@
             "tags": {
                 "FhirServerSolution": "[parameters('solutionType')]"
             },
-            "apiVersion": "2016-12-01",
+            "apiVersion": "2021-06-01",
             "location": "[parameters('location')]",
-            "kind": "Storage",
+            "kind": "StorageV2",
             "sku": {
                 "name": "[parameters('storageAccountType')]"
             },
