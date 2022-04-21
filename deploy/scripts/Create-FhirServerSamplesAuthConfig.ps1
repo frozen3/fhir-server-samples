@@ -21,7 +21,7 @@ param
     [string]$EnvironmentName,
 
     [Parameter(Mandatory = $false)]
-    [string]$EnvironmentLocation = "USGov Arizona",
+    [string]$EnvironmentLocation = "USGov Virginia",
 
     [Parameter(Mandatory = $false )]
     [String]$WebAppSuffix = "azurewebsites.us",
