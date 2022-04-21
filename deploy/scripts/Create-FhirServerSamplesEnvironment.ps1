@@ -60,6 +60,22 @@ param
 
 )
 
+$tags = @{
+    "Environment"="Sandbox"; 
+    "Status"="Installed"; 
+    "Application"="CMS Interop"; 
+    "Product"="FHIR"; 
+    "Division"="HI"; 
+    "Department"=""; 
+    "Contract"="";
+    "Cost Center"="";
+    "Assigned To"="Rakesh Kumar";
+    "Support Group"="Architects";
+    "Business Critical"="Low";
+    "Data"="None";
+    "Opt'd in or out"="No";
+}
+
 function SecretValueText
 {
     param
@@ -216,17 +232,17 @@ if ([string]::IsNullOrEmpty($SqlAdminPassword))
 
 $resourceGroup = Get-AzResourceGroup -Name $EnvironmentName -ErrorAction SilentlyContinue
 if (!$resourceGroup) {
-    New-AzResourceGroup -Name $EnvironmentName -Location $EnvironmentLocation | Out-Null
+    New-AzResourceGroup -Name hi-fhir-rg-d-001 -Location $EnvironmentLocation -Tag $tags | Out-Null
 }
 
 # Making a separate resource group for SMART on FHIR apps, since Linux Container apps cannot live in a resource group with windows apps
 $sofResourceGroup = Get-AzResourceGroup -Name "${EnvironmentName}-sof" -ErrorAction SilentlyContinue
 if (!$sofResourceGroup) {
-    New-AzResourceGroup -Name "${EnvironmentName}-sof" -Location $EnvironmentLocation | Out-Null
+    New-AzResourceGroup -Name hi-fhir-rg-d-001-sof -Location $EnvironmentLocation -Tag $tags | Out-Null
 }
 
 # Deploy the template
-New-AzResourceGroupDeployment -TemplateUri $sandboxTemplate -environmentName $EnvironmentName -fhirApiLocation $FhirApiLocation -ResourceGroupName $EnvironmentName -fhirServerTemplateUrl $fhirServerTemplateUrl -fhirVersion $FhirVersion -sqlAdminPassword $SqlAdminPassword -aadAuthority $aadAuthority -aadDashboardClientId $confidentialClientId -aadDashboardClientSecret $confidentialClientSecret -aadServiceClientId $serviceClientId -aadServiceClientSecret $serviceClientSecret -smartAppClientId $publicClientId -fhirDashboardJSTemplateUrl $dashboardJSTemplate -fhirImporterTemplateUrl $importerTemplate -fhirDashboardRepositoryUrl $SourceRepository -fhirDashboardRepositoryBranch $SourceRevision -deployDashboardSourceCode $DeploySource -usePaaS $UsePaaS -accessPolicies $accessPolicies -enableExport $EnableExport
+New-AzResourceGroupDeployment -TemplateUri $sandboxTemplate -environmentName $EnvironmentName -fhirApiLocation $FhirApiLocation -ResourceGroupName hi-fhir-rg-d-001 -fhirServerTemplateUrl $fhirServerTemplateUrl -fhirVersion $FhirVersion -sqlAdminPassword $SqlAdminPassword -aadAuthority $aadAuthority -aadDashboardClientId $confidentialClientId -aadDashboardClientSecret $confidentialClientSecret -aadServiceClientId $serviceClientId -aadServiceClientSecret $serviceClientSecret -smartAppClientId $publicClientId -fhirDashboardJSTemplateUrl $dashboardJSTemplate -fhirImporterTemplateUrl $importerTemplate -fhirDashboardRepositoryUrl $SourceRepository -fhirDashboardRepositoryBranch $SourceRevision -deployDashboardSourceCode $DeploySource -usePaaS $UsePaaS -accessPolicies $accessPolicies -enableExport $EnableExport -Tag $tags
 
 Write-Host "Warming up site..."
 Invoke-WebRequest -Uri "${fhirServerUrl}/metadata" | Out-Null

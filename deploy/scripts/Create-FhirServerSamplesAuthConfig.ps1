@@ -27,7 +27,7 @@ param
     [String]$WebAppSuffix = "azurewebsites.us",
 
     [Parameter(Mandatory = $false)]
-    [string]$ResourceGroupName = $EnvironmentName,
+    [string]$ResourceGroupName = "hi-fhir-rg-d-001",
 
     [parameter(Mandatory = $false)]
     [string]$KeyVaultName = "$EnvironmentName-ts",
@@ -42,6 +42,22 @@ param
     [string]$TenantId
 
 )
+
+$tags = @{
+    "Environment"="Sandbox";
+    "Status"="Installed";
+    "Application"="CMS Interop";
+    "Product"="FHIR";
+    "Division"="HI";
+    "Department"="";
+    "Contract"="";
+    "Cost Center"="";
+    "Assigned To"="Rakesh Kumar";
+    "Support Group"="Architects";
+    "Business Critical"="Low";
+    "Data"="None";
+    "Opt'd in or out"="No";
+}
 
 Set-StrictMode -Version Latest
 
@@ -83,7 +99,7 @@ if (!$keyVault) {
     if (!$resourceGroup) {
         New-AzResourceGroup -Name $ResourceGroupName -Location $EnvironmentLocation | Out-Null
     }
-    New-AzKeyVault -VaultName $KeyVaultName -ResourceGroupName $ResourceGroupName -Location $EnvironmentLocation | Out-Null
+    New-AzKeyVault -VaultName $KeyVaultName -ResourceGroupName $ResourceGroupName -Location $EnvironmentLocation -Tag $tags | Out-Null
 }
 
 if ($azContext.Account.Type -eq "User") {
