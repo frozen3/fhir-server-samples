@@ -97,7 +97,7 @@ if (!$keyVault) {
     Write-Host "Creating keyvault with the name $KeyVaultName"
     $resourceGroup = Get-AzResourceGroup -Name $ResourceGroupName -ErrorAction SilentlyContinue
     if (!$resourceGroup) {
-        New-AzResourceGroup -Name $ResourceGroupName -Location $EnvironmentLocation | Out-Null
+        New-AzResourceGroup -Name $ResourceGroupName -Location $EnvironmentLocation -Tag $tags | Out-Null
     }
     New-AzKeyVault -VaultName $KeyVaultName -ResourceGroupName $ResourceGroupName -Location $EnvironmentLocation -Tag $tags | Out-Null
 }
