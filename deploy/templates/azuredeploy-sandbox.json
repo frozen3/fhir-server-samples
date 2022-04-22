@@ -189,6 +189,7 @@
             "Support Group": "Architects",
             "Business Critical": "Low",
             "Data": "None",
+            "Status": "Installed",
             "Opt'd in or out": "No"
           }
         }
