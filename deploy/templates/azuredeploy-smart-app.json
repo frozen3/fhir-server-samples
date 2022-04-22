@@ -42,6 +42,13 @@
             "metadata": {
                 "description": "The type of the solution"
             }
+        },
+        "Tag": {
+          "type": "object",
+          "defaultValue": {
+            "Product": "FHIR",
+            "Application": "Interop"
+          }
         }
     },
     "variables": {
@@ -57,9 +64,7 @@
             "type": "Microsoft.Web/serverfarms",
             "location": "[variables('resourcesLocation')]",
             "kind": "linux",
-            "tags": {
-                "FhirServerSolution": "[parameters('solutionType')]"
-            },
+            "tags": "[parameters('Tag')]",
             "sku": {
                 "name": "[parameters('appServicePlanSku')]"
             },
@@ -72,9 +77,7 @@
             "apiVersion": "2018-11-01",
             "name": "[variables('lowerCaseServiceName')]",
             "location": "[variables('resourcesLocation')]",
-            "tags": {
-                "FhirServerSolution": "[parameters('solutionType')]"
-            },
+            "tags": "[parameters('Tag')]",
             "dependsOn": [
                 "[concat('Microsoft.Web/serverfarms/', variables('serverfarmName'))]"
             ],
