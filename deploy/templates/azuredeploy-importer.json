@@ -91,7 +91,17 @@
           "type": "object",
           "defaultValue": {
             "Product": "FHIR",
-            "Application": "Interop"
+            "Application": "Interop",
+            "Environment": "Sandbox",
+            "Division": "HI",
+            "Department": "",
+            "Contract": "",
+            "Cost Center": "",
+            "Assigned To": "Rakesh Kumar",
+            "Support Group": "Architects",
+            "Business Critical": "Low",
+            "Data": "None",
+            "Opt'd in or out": "No"
           }
         }
     },
