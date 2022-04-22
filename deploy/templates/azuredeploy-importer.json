@@ -265,10 +265,7 @@
         "name": "[variables('applicationInsightsName')]",
         "type": "microsoft.insights/components",
         "location": "USGov Virginia",
-        "tags": {
-            "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/sites/', variables('applicationInsightsName'))]": "Resource",
-            "[parameters('Tag')]",
-        },
+        "tags": "[parameters('Tag')]", 
         "properties": {
             "ApplicationId": "[variables('applicationInsightsName')]",
             "Request_Source": "IbizaWebAppExtensionCreate"
