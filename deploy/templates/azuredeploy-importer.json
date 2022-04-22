@@ -86,7 +86,7 @@
             "metadata": {
                 "description": "The type of the solution"
             }
-        }
+        },
         "Tag": {
           "type": "object",
           "defaultValue": {
