@@ -142,9 +142,7 @@
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2015-04-01",
             "name": "[variables('hostingPlanName')]",
-            "tags": {
-                "FhirServerSolution": "[parameters('solutionType')]"
-            },
+            "tags": "[parameters('Tag')]",
             "location": "[parameters('location')]",
             "properties": {
                 "name": "[variables('hostingPlanName')]",
@@ -266,9 +264,10 @@
         "apiVersion": "2018-05-01-preview",
         "name": "[variables('applicationInsightsName')]",
         "type": "microsoft.insights/components",
-        "location": "USGov Arizona",
+        "location": "USGov Virginia",
         "tags": {
-            "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/sites/', variables('applicationInsightsName'))]": "Resource"
+            "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/sites/', variables('applicationInsightsName'))]": "Resource",
+            "[parameters('Tag')]"
         },
         "properties": {
             "ApplicationId": "[variables('applicationInsightsName')]",

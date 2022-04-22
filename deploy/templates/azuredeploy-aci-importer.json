@@ -148,7 +148,7 @@
             "apiVersion": "2018-05-01-preview",
             "name": "[variables('applicationInsightsName')]",
             "type": "Microsoft.insights/components",
-            "location": "USGov Arizona",
+            "location": "USGov Virginia",
             "tags": {
                 "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/sites/', variables('applicationInsightsName'))]": "Resource",
                 "FhirServerSolution": "[parameters('solutionType')]",
