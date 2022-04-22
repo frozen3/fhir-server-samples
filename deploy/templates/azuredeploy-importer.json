@@ -267,7 +267,7 @@
         "location": "USGov Virginia",
         "tags": {
             "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/sites/', variables('applicationInsightsName'))]": "Resource",
-            "[parameters('Tag')]"
+            "[parameters('Tag')]",
         },
         "properties": {
             "ApplicationId": "[variables('applicationInsightsName')]",
