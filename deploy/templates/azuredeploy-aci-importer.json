@@ -94,6 +94,13 @@
                 "description": "The type of the solution"
             }
         }
+        "Tag": {
+          "type": "object",
+          "defaultValue": {
+            "Product": "FHIR",
+            "Application": "Interop"
+          }
+        }
     },
     "variables": {
         "applicationInsightsName": "[parameters('appName')]",
@@ -108,9 +115,7 @@
             "apiVersion": "2016-12-01",
             "location": "[parameters('location')]",
             "kind": "Storage",
-            "tags": {
-                "FhirServerSolution": "[parameters('solutionType')]"
-            },
+            "tags": "[parameters('Tag')]",
             "sku": {
                 "name": "[parameters('storageAccountType')]"
             },
@@ -146,7 +151,8 @@
             "location": "USGov Arizona",
             "tags": {
                 "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/sites/', variables('applicationInsightsName'))]": "Resource",
-                "FhirServerSolution": "[parameters('solutionType')]"
+                "FhirServerSolution": "[parameters('solutionType')]",
+                "[parameters('Tag')]",
             },
             "properties": {
                 "ApplicationId": "[variables('applicationInsightsName')]",
@@ -157,9 +163,7 @@
             "name": "[parameters('appName')]",
             "type": "Microsoft.ContainerInstance/containerGroups",
             "apiVersion": "2018-02-01-preview",
-            "tags": {
-                "FhirServerSolution": "[parameters('solutionType')]"
-            },
+            "tags": "[parameters('Tag')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.insights/components', variables('applicationInsightsName'))]",
