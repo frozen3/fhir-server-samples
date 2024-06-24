@@ -21,13 +21,13 @@ param
     [string]$EnvironmentName,
 
     [Parameter(Mandatory = $false)]
-    [string]$EnvironmentLocation = "West US",
+    [string]$EnvironmentLocation = "USGov Virginia",
 
     [Parameter(Mandatory = $false )]
-    [String]$WebAppSuffix = "azurewebsites.net",
+    [String]$WebAppSuffix = "azurewebsites.us",
 
     [Parameter(Mandatory = $false)]
-    [string]$ResourceGroupName = $EnvironmentName,
+    [string]$ResourceGroupName = "hi-fhir-rg-d-001",
 
     [parameter(Mandatory = $false)]
     [string]$KeyVaultName = "$EnvironmentName-ts",
@@ -36,8 +36,28 @@ param
     [bool]$UsePaaS = $true,
 
     [parameter(Mandatory = $false)]
-    [SecureString]$AdminPassword
+    [SecureString]$AdminPassword,
+
+    [parameter(Mandatory = $true)]
+    [string]$TenantId
+
 )
+
+$tags = @{
+    "Environment"="Sandbox";
+    "Status"="Installed";
+    "Application"="CMS Interop";
+    "Product"="FHIR";
+    "Division"="HI";
+    "Department"="";
+    "Contract"="";
+    "Cost Center"="";
+    "Assigned To"="Rakesh Kumar";
+    "Support Group"="Architects";
+    "Business Critical"="Low";
+    "Data"="None";
+    "Opt'd in or out"="No";
+}
 
 Set-StrictMode -Version Latest
 
@@ -77,9 +97,9 @@ if (!$keyVault) {
     Write-Host "Creating keyvault with the name $KeyVaultName"
     $resourceGroup = Get-AzResourceGroup -Name $ResourceGroupName -ErrorAction SilentlyContinue
     if (!$resourceGroup) {
-        New-AzResourceGroup -Name $ResourceGroupName -Location $EnvironmentLocation | Out-Null
+        New-AzResourceGroup -Name $ResourceGroupName -Location $EnvironmentLocation -Tag $tags | Out-Null
     }
-    New-AzKeyVault -VaultName $KeyVaultName -ResourceGroupName $ResourceGroupName -Location $EnvironmentLocation | Out-Null
+    New-AzKeyVault -VaultName $KeyVaultName -ResourceGroupName $ResourceGroupName -Location $EnvironmentLocation -Tag $tags | Out-Null
 }
 
 if ($azContext.Account.Type -eq "User") {
@@ -130,7 +150,7 @@ Write-Host "Ensuring API application exists"
 
 $fhirServiceName = "${EnvironmentName}srvr"
 if ($UsePaas) {
-    $fhirServiceUrl = "https://${EnvironmentName}.azurehealthcareapis.com"
+    $fhirServiceUrl = "api://${EnvironmentName}.${TenantId}"
 } else {
     $fhirServiceUrl = "https://${fhirServiceName}.${WebAppSuffix}"    
 }
@@ -138,7 +158,7 @@ if ($UsePaas) {
 $application = Get-AzureAdApplication -Filter "identifierUris/any(uri:uri eq '$fhirServiceUrl')"
 
 if (!$application) {
-    $newApplication = New-FhirServerApiApplicationRegistration -FhirServiceAudience $fhirServiceUrl -AppRoles "globalAdmin"
+    $newApplication = New-FhirServerApiApplicationRegistration -FhirServiceAudience "api://${EnvironmentName}.${TenantId}" -AppRoles "globalAdmin"
     
     # Change to use applicationId returned
     $application = Get-AzureAdApplication -Filter "identifierUris/any(uri:uri eq '$fhirServiceUrl')"

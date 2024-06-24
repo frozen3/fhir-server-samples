@@ -33,7 +33,7 @@
         },
         "aadAuthority": {
             "type": "string",
-            "defaultValue": "https://login.microsoftonline.com/common",
+            "defaultValue": "https://login.microsoftonline.us/common",
             "metadata": {
                 "description": "OAuth Authority for FHIR server"
             }
@@ -91,15 +91,15 @@
         },
         "fhirDashboardJSTemplateUrl": {
             "type": "string",
-            "defaultValue": "https://raw.githubusercontent.com/Microsoft/fhir-server-samples/master/deploy/templates/azuredeploy-dashboard-js.json",
+            "defaultValue": "https://raw.githubusercontent.com/frozen3/fhir-server-samples/master/deploy/templates/azuredeploy-dashboard-js.json",
             "metadata": {
                 "description": "URL for FHIR dashboard (JS edition) template"
             }
         },
         "fhirApiLocation": {
             "type": "string",
-            "allowedValues": [ "eastus", "westus2", "northcentralus", "ukwest", "uksouth", "southeastasia", "australiaeast", "westeurope" ],
-            "defaultValue": "westus2",
+            "allowedValues": [ "eastus", "westus2", "northcentralus", "ukwest", "uksouth", "southeastasia", "australiaeast", "westeurope","usgovarizona", "usgovvirginia" ],
+            "defaultValue": "usgovvirginia",
             "metadata": {
                 "description": "Location of Azure API for FHIR"
             }
@@ -114,7 +114,7 @@
         },
         "fhirImporterTemplateUrl": {
             "type": "string",
-            "defaultValue": "https://raw.githubusercontent.com/Microsoft/fhir-server-samples/master/deploy/templates/azuredeploy-importer.json",
+            "defaultValue": "https://raw.githubusercontent.com/frozen3/fhir-server-samples/master/deploy/templates/azuredeploy-importer.json",
             "metadata": {
                 "description": "URL for FHIR importer template"
             }
@@ -128,7 +128,7 @@
         },
         "fhirDashboardRepositoryUrl": {
             "type": "string",
-            "defaultValue": "https://github.com/Microsoft/fhir-server-samples",
+            "defaultValue": "https://github.com/frozen3/fhir-server-samples",
             "metadata": {
                 "description": "URL for FHIR dashboard repository"
             }
@@ -174,6 +174,24 @@
             "metadata": {
                 "description": "Determines whether export will be enabled for this fhir instance. If true, a storage account will be created as part of the deployment. You will need owner or user-administrator permissions for this."
             }
+        },
+        "Tag": {
+          "type": "object",
+          "defaultValue": {
+            "Product": "FHIR",
+            "Application": "Interop",
+            "Environment": "Sandbox",
+            "Division": "HI",
+            "Department": "",
+            "Contract": "",
+            "Cost Center": "",
+            "Assigned To": "Rakesh Kumar",
+            "Support Group": "Architects",
+            "Business Critical": "Low",
+            "Data": "None",
+            "Status": "Installed",
+            "Opt'd in or out": "No"
+          }
         }
     },
     "variables": {
@@ -183,8 +201,8 @@
         "environmentName": "[if(empty(parameters('environmentName')), concat('fhirdemo', uniqueString(resourceGroup().id)), parameters('environmentName'))]",
         "fhirServiceName": "[if(parameters('usePaaS'), variables('environmentName'), concat(variables('environmentName'),'srvr'))]",
         "fhirImporterName": "[concat(variables('environmentName'),'imp')]",
-        "webAppsuffix": "[if(variables('isMAG'),'.azurewebsites.us','.azurewebsites.net')]",
-        "fhirServerUrlSuffix": "[if(parameters('usePaaS'),'.azurehealthcareapis.com', variables('webAppSuffix'))]",
+        "webAppsuffix": "[if(variables('isMAG'),'.azurewebsites.us','.azurewebsites.us')]",
+        "fhirServerUrlSuffix": "[if(parameters('usePaaS'),'.azurehealthcareapis.us', variables('webAppSuffix'))]",
         "fhirServiceUrl": "[concat('https://', variables('fhirServiceName'), variables('fhirServerUrlSuffix'))]",
         "fhirServiceKind": "[concat('fhir-', parameters('fhirVersion'))]",
         "aadFhirServerAudience": "[if(empty(parameters('aadFhirServerAudience')), variables('fhirServiceUrl'), parameters('aadFhirServerAudience'))]",
@@ -242,9 +260,7 @@
             "apiVersion": "2015-08-01",
             "name": "[variables('appServicePlanName')]",
             "type": "Microsoft.Web/serverfarms",
-            "tags": {
-                "FhirServerSolution": "[parameters('solutionType')]"
-            },
+            "tags": "[parameters('Tag')]", 
             "location": "[resourceGroup().location]",
             "sku": {
                 "name": "[parameters('appServicePlanSku')]"
@@ -267,7 +283,7 @@
                 "name": "Standard_LRS"
             },
             "kind": "Storage",
-            "tags": {}
+            "tags": "[parameters('Tag')]",
         },
         {
             "type": "Microsoft.Storage/storageAccounts/providers/roleAssignments",
@@ -278,6 +294,7 @@
                 "[variables('exportStorageAccountName')]",
                 "[if(parameters('usePaas'), variables('fhirServiceName'), concat(variables('fhirServiceName'),'-deploy'))]"
             ],
+            "tags": "[parameters('Tag')]",
             "properties": {
                 "roleDefinitionId": "[variables('storageBlobDataContributerRoleId')]",
                 "principalId": "[if(parameters('usePaas'), reference(concat('Microsoft.HealthcareApis/services/', variables('fhirServiceName')), '2019-09-16', 'full').identity.principalId, '')]",
@@ -291,6 +308,7 @@
             "apiVersion": "2019-09-16",
             "location": "[parameters('fhirApiLocation')]",
             "condition": "[parameters('usePaaS')]",
+            "tags": "[parameters('Tag')]",
             "identity": {
                 "type": "SystemAssigned"
             },
@@ -321,6 +339,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-08-01",
             "condition": "[not(parameters('usePaaS'))]",
+            "tags": "[parameters('Tag')]",
             "properties": {
                 "templateLink": {
                     "uri": "[parameters('fhirServerTemplateUrl')]",
@@ -334,6 +353,7 @@
             "name": "[concat(variables('fhirImporterName'),'-deploy')]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-08-01",
+            "tags": "[parameters('Tag')]",
             "properties": {
                 "templateLink": {
                     "uri": "[parameters('fhirImporterTemplateUrl')]",
@@ -372,6 +392,7 @@
             "name": "[concat(variables('fhirDashboardJSName'),'-deploy')]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-08-01",
+            "tags": "[parameters('Tag')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]"
             ],
@@ -423,6 +444,7 @@
             "type": "Microsoft.Resources/deployments",
             "resourceGroup": "[concat(resourceGroup().name, '-sof')]",
             "apiVersion": "2019-08-01",
+            "tags": "[parameters('Tag')]",
             "properties": {
                 "templateLink": {
                     "uri": "[variables('smartAppTemplateUrl')]",
@@ -447,6 +469,7 @@
             "type": "Microsoft.Resources/deployments",
             "resourceGroup": "[concat(resourceGroup().name, '-sof')]",
             "apiVersion": "2019-08-01",
+            "tags": "[parameters('Tag')]",
             "properties": {
                 "templateLink": {
                     "uri": "[variables('smartAppTemplateUrl')]",

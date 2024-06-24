@@ -42,6 +42,24 @@
             "metadata": {
                 "description": "The type of the solution"
             }
+        },
+        "Tag": {
+          "type": "object",
+          "defaultValue": {
+            "Product": "FHIR",
+            "Application": "Interop",
+            "Environment": "Sandbox",
+            "Division": "HI",
+            "Department": "",
+            "Contract": "",
+            "Cost Center": "",
+            "Assigned To": "Rakesh Kumar",
+            "Support Group": "Architects",
+            "Business Critical": "Low",
+            "Data": "None",
+            "Status": "Installed",
+            "Opt'd in or out": "No"
+          }
         }
     },
     "variables": {
@@ -57,9 +75,7 @@
             "type": "Microsoft.Web/serverfarms",
             "location": "[variables('resourcesLocation')]",
             "kind": "linux",
-            "tags": {
-                "FhirServerSolution": "[parameters('solutionType')]"
-            },
+            "tags": "[parameters('Tag')]",
             "sku": {
                 "name": "[parameters('appServicePlanSku')]"
             },
@@ -72,9 +88,7 @@
             "apiVersion": "2018-11-01",
             "name": "[variables('lowerCaseServiceName')]",
             "location": "[variables('resourcesLocation')]",
-            "tags": {
-                "FhirServerSolution": "[parameters('solutionType')]"
-            },
+            "tags": "[parameters('Tag')]",
             "dependsOn": [
                 "[concat('Microsoft.Web/serverfarms/', variables('serverfarmName'))]"
             ],

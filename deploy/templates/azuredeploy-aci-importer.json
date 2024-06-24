@@ -29,7 +29,7 @@
         },
         "aadAuthority": {
             "type": "string",
-            "defaultValue": "https://login.microsoftonline.com/common",
+            "defaultValue": "https://login.microsoftonline.us/common",
             "metadata": {
                 "description": "OAuth Authority"
             }
@@ -94,6 +94,24 @@
                 "description": "The type of the solution"
             }
         }
+        "Tag": {
+          "type": "object",
+          "defaultValue": {
+            "Product": "FHIR",
+            "Application": "Interop",
+            "Environment": "Sandbox",
+            "Division": "HI",
+            "Department": "",
+            "Contract": "",
+            "Cost Center": "",
+            "Assigned To": "Rakesh Kumar",
+            "Support Group": "Architects",
+            "Business Critical": "Low",
+            "Data": "None",
+            "Status": "Installed",
+            "Opt'd in or out": "No"
+          }
+        }
     },
     "variables": {
         "applicationInsightsName": "[parameters('appName')]",
@@ -108,9 +126,7 @@
             "apiVersion": "2016-12-01",
             "location": "[parameters('location')]",
             "kind": "Storage",
-            "tags": {
-                "FhirServerSolution": "[parameters('solutionType')]"
-            },
+            "tags": "[parameters('Tag')]",
             "sku": {
                 "name": "[parameters('storageAccountType')]"
             },
@@ -143,11 +159,8 @@
             "apiVersion": "2018-05-01-preview",
             "name": "[variables('applicationInsightsName')]",
             "type": "Microsoft.insights/components",
-            "location": "East US",
-            "tags": {
-                "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/sites/', variables('applicationInsightsName'))]": "Resource",
-                "FhirServerSolution": "[parameters('solutionType')]"
-            },
+            "location": "USGov Virginia",
+            "tags": "[parameters('Tag')]",
             "properties": {
                 "ApplicationId": "[variables('applicationInsightsName')]",
                 "Request_Source": "IbizaWebAppExtensionCreate"
@@ -157,9 +170,7 @@
             "name": "[parameters('appName')]",
             "type": "Microsoft.ContainerInstance/containerGroups",
             "apiVersion": "2018-02-01-preview",
-            "tags": {
-                "FhirServerSolution": "[parameters('solutionType')]"
-            },
+            "tags": "[parameters('Tag')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.insights/components', variables('applicationInsightsName'))]",

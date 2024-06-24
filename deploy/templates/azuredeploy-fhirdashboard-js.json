@@ -42,7 +42,7 @@
         },
         "aadAuthority": {
             "type": "string",
-            "defaultValue": "https://login.microsoftonline.com/common",
+            "defaultValue": "https://login.microsoftonline.us/common",
             "metadata": {
                 "description": "OAuth Authority"
             }
@@ -74,7 +74,7 @@
         },
         "repositoryUrl": {
             "type": "string",
-            "defaultValue": "https://github.com/Microsoft/fhir-server-samples",
+            "defaultValue": "https://github.com/frozen3/fhir-server-samples",
             "metadata": {
                 "description": "Respository to pull source code from. If blank, source code will not be deployed."
             }
@@ -121,6 +121,24 @@
             "metadata": {
                 "description": "The type of the solution"
             }
+        },
+        "Tag": {
+          "type": "object",
+          "defaultValue": {
+            "Product": "FHIR",
+            "Application": "Interop",
+            "Environment": "Sandbox",
+            "Division": "HI",
+            "Department": "",
+            "Contract": "",
+            "Cost Center": "",
+            "Assigned To": "Rakesh Kumar",
+            "Support Group": "Architects",
+            "Business Critical": "Low",
+            "Data": "None",
+            "Status": "Installed",
+            "Opt'd in or out": "No"
+          }
         }
     },
     "variables": {
@@ -151,6 +169,7 @@
             "apiVersion": "2019-08-01",
             "name": "fhir-dashboard-nested-asp-template",
             "type": "Microsoft.Resources/deployments",
+            "tags": "[parameters('Tag')]",
             "properties": {
                 "mode": "Incremental",
                 "template": {
@@ -182,9 +201,7 @@
             "apiVersion": "2015-08-01",
             "type": "Microsoft.Web/sites",
             "name": "[variables('siteName')]",
-            "tags": {
-                "FhirServerSolution": "[parameters('solutionType')]"
-            },
+            "tags": "[parameters('Tag')]",
             "location": "[resourceGroup().location]",
             "identity": {
                 "type": "SystemAssigned"
